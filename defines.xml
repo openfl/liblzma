@@ -1,0 +1,7 @@
+<xml>
+
+    <compilerflag value="-DNATIVE_TOOLKIT_LZMA"/>
+    <!-- :todo: investigate why it's flagged as single threaded on non-windows -->
+    <compilerflag value="-D_7ZIP_ST" unless="windows"/>
+
+</xml>
