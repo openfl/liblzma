@@ -1,4 +1,4 @@
-#include "libs/lzma/lzma.h"
+#include "lzma.h"
 #include "./LzmaEnc.h"
 #include "./LzmaDec.h"
 
@@ -56,7 +56,7 @@ namespace lumen {
 		*/
 		props.writeEndMark = 0;
 		props.numThreads = 1;
-		
+
 		ICompressProgress progress = { lzma_Progress };
 		ISzAlloc alloc_small = { lzma_Alloc, lzma_Free };
 		ISzAlloc alloc_big = { lzma_Alloc, lzma_Free };
@@ -67,14 +67,14 @@ namespace lumen {
 			&props, props_data, &props_size, props.writeEndMark,
 			&progress, &alloc_small, &alloc_big
 		);
-		
+
 		unsigned char le_size[8];
 		WRITE_LE64(&le_size[0], uncompressed_length);
-		
+
 		buffer_append_sub(output_buffer, (const char *)props_data, props_size);
 		buffer_append_sub(output_buffer, (const char *)le_size, 8);
 		buffer_append_sub(output_buffer, (const char *)output_buffer_data, output_buffer_size);
-		
+
 		free(props_data);
 		free(output_buffer_data);
 	}
@@ -88,10 +88,10 @@ namespace lumen {
 		ELzmaStatus status = LZMA_STATUS_NOT_SPECIFIED;
 		ISzAlloc alloc = { lzma_Alloc, lzma_Free };
 		CLzmaProps props = {0};
-		
+
 		LzmaProps_Decode(&props, input_buffer_data, LZMA_PROPS_SIZE);
 		uncompressed_length = READ_LE64(input_buffer_data + LZMA_PROPS_SIZE);
-		
+
 		SizeT output_buffer_size = (SizeT)uncompressed_length;
 		Byte *output_buffer_data = (Byte *)malloc(output_buffer_size);
 
@@ -105,7 +105,7 @@ namespace lumen {
 			LZMA_FINISH_ANY,
 			&status, &alloc
 		);
-		
+
 		buffer_append_sub(output_buffer, (const char *)output_buffer_data, output_buffer_size);
 	}
 }
