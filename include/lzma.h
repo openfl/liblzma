@@ -1,19 +1,19 @@
-#ifndef LUMEN_LZMA_H
-#define LUMEN_LZMA_H
+#ifndef NATIVE_TOOLKIT_LZMA_H
+#define NATIVE_TOOLKIT_LZMA_H
 
 #include <hx/CFFI.h>
 
-namespace lumen {
+namespace native_toolkit_lzma {
 
 	class Lzma {
 
 		public:
-		
+
 			static void Encode( buffer input_buffer, buffer output_buffer );
 			static void Decode( buffer input_buffer, buffer output_buffer );
 
 	}; //Lzma
-	
-} //namespace lumen
 
-#endif //LUMEN_LZMA_H
+} //native_toolkit_lzma
+
+#endif //NATIVE_TOOLKIT_LZMA_H
